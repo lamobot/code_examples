@@ -1,2 +1,2 @@
-# code_examples
-Public repository with code examples
+# scripts
+Lamobot's code examples

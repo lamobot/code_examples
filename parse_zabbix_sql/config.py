@@ -3,7 +3,7 @@ filename = 'test.csv'
 spliter = ';'
 
 # connect to zk database
-zk_db_hostname = ''
-zk_db_username = ''
-zk_db_password = ''
-zk_db_name = ''
+zabbix_db_hostname = ''
+zabbix_db_username = ''
+zabbix_db_password = ''
+zabbix_db_name = ''

@@ -1,3 +1,3 @@
 # scripts
 
-Здесь лежат какие-то старые урезанные куски ненужного кода =) Так чисто для примера =)
+Here are some chunks of unnecessary code just for example =)

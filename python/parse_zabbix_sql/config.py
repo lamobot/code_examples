@@ -1,6 +1,6 @@
 # Global variables
-filename = 'test.csv'
-spliter = ';'
+filename: str = 'test.csv'
+spliter:  str = ';'
 
 # connect to zk database
 zabbix_db_hostname = ''

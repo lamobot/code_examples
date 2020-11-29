@@ -2,53 +2,56 @@ import psycopg2
 import datetime
 import config
 
-#Factory
+
+connlst = [
+    config.zabbix_db_hostname,
+    config.zabbix_db_username,
+    config.zabbix_db_password,
+    config.zabbix_db_name
+]
+
+
+# Factory
 class Report:
     def __init__(self):
         raise Exception('Cannot create an instance for class Report')
 
     def get_report(report):
         if report == 'incoming_traffic':
-            return Get_zabbix_metriks(config.zabbix_db_hostname, config.zabbix_db_username, config.zabbix_db_password, config.zabbix_db_name).write_incoming_traffic(config.filename)
+            return Get_zabbix_metriks(connlst).write_incoming_traffic(config.filename)
         elif report == 'hdd_size':
-            return Get_zabbix_metriks(config.zabbix_db_hostname, config.zabbix_db_username, config.zabbix_db_password, config.zabbix_db_name).write_hdd_size(config.filename)
+            return Get_zabbix_metriks(connlst).write_hdd_size(config.filename)
         elif report == 'speed_reading':
-            return Get_zabbix_metriks(config.zabbix_db_hostname, config.zabbix_db_username, config.zabbix_db_password, config.zabbix_db_name).write_speed_reading(config.filename)
+            return Get_zabbix_metriks(connlst).write_speed_reading(config.filename)
         elif report == 'speed_writing':
-            return Get_zabbix_metriks(config.zabbix_db_hostname, config.zabbix_db_username, config.zabbix_db_password, config.zabbix_db_name).write_speed_writing(config.filename)
+            return Get_zabbix_metriks(connlst).write_speed_writing(config.filename)
         elif report == 'using_hdd_size':
-            return Get_zabbix_metriks(config.zabbix_db_hostname, config.zabbix_db_username, config.zabbix_db_password, config.zabbix_db_name).write_using_hdd_size(config.filename)
+            return Get_zabbix_metriks(connlst).write_using_hdd_size(config.filename)
         elif report == 'memory_used':
-            return Get_zabbix_metriks(config.zabbix_db_hostname, config.zabbix_db_username, config.zabbix_db_password, config.zabbix_db_name).write_memory_used(config.filename)
+            return Get_zabbix_metriks(connlst).write_memory_used(config.filename)
         elif report == 'cpu_used':
-            return Get_zabbix_metriks(config.zabbix_db_hostname, config.zabbix_db_username, config.zabbix_db_password, config.zabbix_db_name).write_cpu_used(config.filename)
+            return Get_zabbix_metriks(connlst).write_cpu_used(config.filename)
         else:
             Exception('There is not report with name {report}')
 
+
 # Connector (Parent class)
 class Connect_database:
-    def __init__(self, host, user, password, dbname):
-        self.__host = host
-        self.__user = user
-        self.__password = password
-        self.__dbname = dbname
+    def __init__(self, connlst):
+        self.__connlst = connlst
 
     def get_connection(self):
         try:
-            with psycopg2.connect(
-                host = self.__host,
-                user = self.__user ,
-                password = self.__password,
-                dbname = self.__dbname
-            ) as conn:
+            with psycopg2.connect(connlst) as conn:
                 return conn.cursor()
         except psycopg2.Error:
             print("Cannot connect to database")
 
+
 # Get Zabbix metriks
 class Get_zabbix_metriks(Connect_database):
-    def __init__(self, host, user, password, dbname):
-        super().__init__(host, user, password, dbname)
+    def __init__(self, connlst):
+        super().__init__(connlst)
 
     def __get_incoming_traffic(self):
         cursor = super().get_connection()

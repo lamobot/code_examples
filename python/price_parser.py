@@ -11,6 +11,7 @@ size_list = ['70 X 200','80 X 200','90 X 200','120 X 200','140 X 200','160 X 200
 filename_write = filename.split('.')[0] + '_ready.csv'
 art_sym = 'PY' + brand.upper() + filename.split('.')[0].upper()
 
+
 def get_price_list():
     lst = []
     with open(filename, 'r') as f:
@@ -18,6 +19,7 @@ def get_price_list():
         for row in reader:
             lst.append(row)
         return lst
+
 
 i = 1
 price = 0
